@@ -1,7 +1,8 @@
-package com.perqin.dailywallpapers
+package com.perqin.dailywallpapers.pages.main
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.perqin.dailywallpapers.R
 
 class MainActivity : AppCompatActivity() {
 
