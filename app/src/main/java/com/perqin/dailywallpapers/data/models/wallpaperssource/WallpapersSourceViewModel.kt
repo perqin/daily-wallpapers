@@ -1,4 +1,4 @@
-package com.perqin.dailywallpapers.data.wallpaperssource
+package com.perqin.dailywallpapers.data.models.wallpaperssource
 
 /**
  * Author: perqin
