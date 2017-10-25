@@ -1,5 +1,6 @@
 package com.perqin.dailywallpapers.data.models.wallpaperssource
 
+import android.arch.lifecycle.LiveData
 import com.perqin.dailywallpapers.data.room.AppDb
 
 /**
@@ -7,5 +8,7 @@ import com.perqin.dailywallpapers.data.room.AppDb
  * Date  : 10/25/17
  */
 object WallpapersSourceRepository {
-    private val wallpapersSourceDao = AppDb.instance().wallpapersSourceDao()
+    private val wallpapersSourceDao = AppDb.instance.wallpapersSourceDao()
+
+    fun getAllWallpapersSources(): LiveData<List<WallpapersSource>> = wallpapersSourceDao.queryAllWallpapersSources()
 }

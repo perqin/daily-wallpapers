@@ -10,10 +10,10 @@ import android.arch.persistence.room.PrimaryKey
 @Entity(tableName = WallpapersSource.TABLE_NAME)
 data class WallpapersSource(
         @PrimaryKey(autoGenerate = true)
-        val uid: Long,
-        var title: String,
-        var url: String,
-        var version: Int
+        var uid: Long = -1,
+        var title: String = "",
+        var url: String = "",
+        var version: Int = -1
 ) {
     companion object {
         const val TABLE_NAME = "wallpapers_source"

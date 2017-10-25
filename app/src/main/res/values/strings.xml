@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Daily Wallpapers</string>
+    <string name="stub_contentDescription">Stub</string>
 </resources>

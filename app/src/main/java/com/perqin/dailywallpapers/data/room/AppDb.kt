@@ -8,9 +8,7 @@ import com.perqin.dailywallpapers.app.AppContext
  * Date  : 10/25/17
  */
 object AppDb {
-    fun instance() = Room.databaseBuilder(
-            AppContext,
-            AppRoomDatabase::class.java,
-            AppRoomDatabase.DB_NAME
-    ).build()
+    val instance by lazy {
+        Room.databaseBuilder(AppContext, AppRoomDatabase::class.java, AppRoomDatabase.DB_NAME).build()
+    }
 }
