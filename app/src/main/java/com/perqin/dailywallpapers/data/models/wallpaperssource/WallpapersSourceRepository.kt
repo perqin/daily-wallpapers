@@ -11,4 +11,8 @@ object WallpapersSourceRepository {
     private val wallpapersSourceDao = AppDb.instance.wallpapersSourceDao()
 
     fun getAllWallpapersSources(): LiveData<List<WallpapersSource>> = wallpapersSourceDao.queryAllWallpapersSources()
+
+    fun addWallpapersSource(wallpapersSource: WallpapersSource) {
+        wallpapersSourceDao.insertWallpapersSource(wallpapersSource)
+    }
 }

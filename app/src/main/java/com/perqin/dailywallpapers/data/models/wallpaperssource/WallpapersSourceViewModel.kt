@@ -11,4 +11,8 @@ class WallpapersSourceViewModel : ViewModel() {
     val wallpapersSources: LiveData<List<WallpapersSource>> by lazy {
         WallpapersSourceRepository.getAllWallpapersSources()
     }
+
+    fun addWallpapersSource(wallpapersSource: WallpapersSource) {
+        WallpapersSourceRepository.addWallpapersSource(wallpapersSource)
+    }
 }

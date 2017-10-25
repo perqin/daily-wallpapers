@@ -6,8 +6,13 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.perqin.dailywallpapers.R
+import com.perqin.dailywallpapers.data.models.wallpaperssource.WallpapersSource
 import com.perqin.dailywallpapers.data.models.wallpaperssource.WallpapersSourceViewModel
 import kotlinx.android.synthetic.main.activity_wallpapers_sources.*
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.run
 
 class WallpapersSourcesActivity : AppCompatActivity() {
     private lateinit var wallpapersSourcesViewModel : WallpapersSourceViewModel
@@ -19,12 +24,25 @@ class WallpapersSourcesActivity : AppCompatActivity() {
 
         recyclerAdapter = WallpapersSourcesRecyclerAdapter()
 
-        recyclerView.adapter = recyclerAdapter
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        setup()
 
         wallpapersSourcesViewModel = ViewModelProviders.of(this).get(WallpapersSourceViewModel::class.java)
         wallpapersSourcesViewModel.wallpapersSources.observe(this, Observer {
             recyclerAdapter.refreshWallpapersSources(it?:emptyList())
         })
+    }
+
+    private fun setup() {
+        recyclerView.adapter = recyclerAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        fab.setOnClickListener {
+            launch(UI) {
+                run(CommonPool) {
+                    wallpapersSourcesViewModel.addWallpapersSource(WallpapersSource(
+                            -1, "Example", "http://example.com", 0
+                    ))
+                }
+            }
+        }
     }
 }
