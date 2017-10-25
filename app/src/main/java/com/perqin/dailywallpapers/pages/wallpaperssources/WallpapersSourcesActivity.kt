@@ -39,7 +39,7 @@ class WallpapersSourcesActivity : AppCompatActivity() {
             launch(UI) {
                 run(CommonPool) {
                     wallpapersSourcesViewModel.addWallpapersSource(WallpapersSource(
-                            -1, "Example", "http://example.com", 0
+                            null, "Example", "http://example.com", 0
                     ))
                 }
             }
