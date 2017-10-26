@@ -1,7 +1,9 @@
-package com.perqin.dailywallpapers.data.models.wallpaperssource
+package com.perqin.dailywallpapers.data.viewmodels
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import com.perqin.dailywallpapers.data.models.wallpaperssource.WallpapersSource
+import com.perqin.dailywallpapers.data.models.wallpaperssource.WallpapersSourceRepository
 
 /**
  * Author: perqin

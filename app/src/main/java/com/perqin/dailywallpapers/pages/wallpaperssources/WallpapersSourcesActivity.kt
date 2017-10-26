@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.perqin.dailywallpapers.R
 import com.perqin.dailywallpapers.data.models.wallpaperssource.WallpapersSource
-import com.perqin.dailywallpapers.data.models.wallpaperssource.WallpapersSourceViewModel
+import com.perqin.dailywallpapers.data.viewmodels.WallpapersSourceViewModel
 import kotlinx.android.synthetic.main.activity_wallpapers_sources.*
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI

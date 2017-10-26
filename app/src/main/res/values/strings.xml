@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Daily Wallpapers</string>
     <string name="stub_contentDescription">Stub</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dialogTitle_newWallpapersSource">New wallpapers source</string>
+    <string name="dialogTitle_editWallpapersSource">Edit wallpapers source</string>
+    <string name="buttonText_discard">Discard</string>
+    <string name="buttonText_save">Save</string>
+    <string name="editTextHint_url">Source URL</string>
+    <string name="editTextHint_title">Source title</string>
+    <string name="editTextHint_version">Version</string>
 </resources>
