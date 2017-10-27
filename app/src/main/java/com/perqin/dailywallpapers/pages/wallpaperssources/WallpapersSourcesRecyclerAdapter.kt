@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.item_wallpapers_source.view.*
  */
 class WallpapersSourcesRecyclerAdapter : RecyclerView.Adapter<WallpapersSourcesRecyclerAdapter.ViewHolder>() {
     private var wallpapersSources: List<WallpapersSource>
+    private var listener: ItemInteractListener? = null
 
     init {
         wallpapersSources = emptyList()
@@ -32,12 +33,21 @@ class WallpapersSourcesRecyclerAdapter : RecyclerView.Adapter<WallpapersSourcesR
         holder.itemView.textView_title.text = source.title
         holder.itemView.textView_url.text = source.url
         holder.itemView.imageButton_edit.setOnClickListener {
+            listener?.onItemEditClick(source)
         }
+    }
+
+    fun setItemInteractListener(listener: ItemInteractListener) {
+        this.listener = listener
     }
 
     fun refreshWallpapersSources(wallpapersSources: List<WallpapersSource>) {
         this.wallpapersSources = wallpapersSources
         notifyDataSetChanged()
+    }
+
+    interface ItemInteractListener {
+        fun onItemEditClick(wallpapersSource: WallpapersSource)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

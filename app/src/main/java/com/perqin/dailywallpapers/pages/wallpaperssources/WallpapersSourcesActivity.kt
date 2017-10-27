@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.perqin.dailywallpapers.R
 import com.perqin.dailywallpapers.data.models.wallpaperssource.WallpapersSource
+import com.perqin.dailywallpapers.pages.wallpaperssources.editingwallpaperssource.EditingWallpapersSourceFragment
 import com.perqin.dailywallpapers.viewmodels.WallpapersSourcesViewModel
 import kotlinx.android.synthetic.main.activity_wallpapers_sources.*
 import kotlinx.coroutines.experimental.CommonPool
@@ -23,6 +24,11 @@ class WallpapersSourcesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_wallpapers_sources)
 
         recyclerAdapter = WallpapersSourcesRecyclerAdapter()
+        recyclerAdapter.setItemInteractListener(object : WallpapersSourcesRecyclerAdapter.ItemInteractListener {
+            override fun onItemEditClick(wallpapersSource: WallpapersSource) {
+                EditingWallpapersSourceFragment.newInstance(wallpapersSource.uid).show(supportFragmentManager, EditingWallpapersSourceFragment::class.java.name)
+            }
+        })
 
         setup()
 

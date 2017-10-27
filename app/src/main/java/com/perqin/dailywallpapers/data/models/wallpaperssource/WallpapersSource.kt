@@ -11,7 +11,7 @@ import android.arch.persistence.room.PrimaryKey
 @Entity(tableName = WallpapersSource.TABLE_NAME)
 data class WallpapersSource(
         @PrimaryKey(autoGenerate = true)
-        @ColumnInfo(name = "uid")
+        @ColumnInfo(name = UID)
         var uid: Long? = null,
         var title: String = "",
         var url: String = "",
