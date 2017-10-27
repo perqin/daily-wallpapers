@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.perqin.dailywallpapers.R
 import com.perqin.dailywallpapers.data.models.wallpaperssource.WallpapersSource
-import com.perqin.dailywallpapers.data.viewmodels.WallpapersSourceViewModel
+import com.perqin.dailywallpapers.viewmodels.WallpapersSourcesViewModel
 import kotlinx.android.synthetic.main.activity_wallpapers_sources.*
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
@@ -15,7 +15,7 @@ import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.run
 
 class WallpapersSourcesActivity : AppCompatActivity() {
-    private lateinit var wallpapersSourcesViewModel : WallpapersSourceViewModel
+    private lateinit var wallpapersSourcesViewModel : WallpapersSourcesViewModel
     private lateinit var recyclerAdapter : WallpapersSourcesRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +26,7 @@ class WallpapersSourcesActivity : AppCompatActivity() {
 
         setup()
 
-        wallpapersSourcesViewModel = ViewModelProviders.of(this).get(WallpapersSourceViewModel::class.java)
+        wallpapersSourcesViewModel = ViewModelProviders.of(this).get(WallpapersSourcesViewModel::class.java)
         wallpapersSourcesViewModel.wallpapersSources.observe(this, Observer {
             recyclerAdapter.refreshWallpapersSources(it?:emptyList())
         })
