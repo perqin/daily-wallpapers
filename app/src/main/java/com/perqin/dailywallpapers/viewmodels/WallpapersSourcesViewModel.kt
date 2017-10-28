@@ -10,7 +10,7 @@ import com.perqin.dailywallpapers.data.models.wallpaperssource.WallpapersSourceR
  * Date  : 10/25/17
  */
 class WallpapersSourcesViewModel : ViewModel() {
-    val wallpapersSources: LiveData<List<WallpapersSource>> by lazy {
+    val wallpapersSources: LiveData<List<WallpapersSource>?> by lazy {
         WallpapersSourceRepository.getAllWallpapersSources()
     }
 

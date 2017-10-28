@@ -1,7 +1,10 @@
 package com.perqin.dailywallpapers.viewmodels
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModel
+import com.perqin.dailywallpapers.data.models.wallpaperssource.WallpapersSource
 import com.perqin.dailywallpapers.data.models.wallpaperssource.WallpapersSourceRepository
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
@@ -13,22 +16,29 @@ import kotlinx.coroutines.experimental.run
  * @date 10/27/17
  */
 class EditingWallpapersSourceViewModel : ViewModel() {
-    var uid: Long? = null
-    val url: MutableLiveData<String> = MutableLiveData()
-    val title: MutableLiveData<String> = MutableLiveData()
-    val version: MutableLiveData<Int> = MutableLiveData()
+    private val editingWallpapersSource: MutableLiveData<WallpapersSource> = MutableLiveData()
+    private val existingSourceObserver: Observer<WallpapersSource?> = Observer { wallpapersSource ->
+        editingWallpapersSource.value = wallpapersSource
+    }
+    private var existingSource: LiveData<WallpapersSource?>? = null
+
+    override fun onCleared() {
+        existingSource?.removeObserver(existingSourceObserver)
+    }
 
     fun init(wallpapersSourceUid: Long?) {
-        uid = wallpapersSourceUid?.also {
+        if (wallpapersSourceUid == null) {
+            editingWallpapersSource.value = WallpapersSource()
+        } else {
             launch(UI) {
-                run(CommonPool) {
-                    WallpapersSourceRepository.getWallpapersSource(it).value
-                }?.also {
-                    url.postValue(it.url)
-                    title.postValue(it.title)
-                    version.postValue(it.version)
+                existingSource = run(CommonPool) {
+                    WallpapersSourceRepository.getWallpapersSource(wallpapersSourceUid)
+                }.also {
+                    it.observeForever(existingSourceObserver)
                 }
             }
         }
     }
+
+    fun getEditingWallpapersSource(): LiveData<WallpapersSource> = editingWallpapersSource
 }

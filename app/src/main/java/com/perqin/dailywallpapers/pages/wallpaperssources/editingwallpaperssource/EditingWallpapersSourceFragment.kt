@@ -29,7 +29,9 @@ class EditingWallpapersSourceFragment : DialogFragment() {
     @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val contentView = LayoutInflater.from(activity).inflate(R.layout.fragment_editing_wallpapers_source, null)
-        editingWallpapersSourceViewModel.url.observe(this, Observer { contentView.editText_url.setText(it?:"") })
+        editingWallpapersSourceViewModel.getEditingWallpapersSource().observe(this, Observer {
+            contentView.editText_url.setText(it?.url)
+        })
         return AlertDialog.Builder(context, theme)
                 .setTitle(if (wallpapersSourceUid == null) R.string.dialogTitle_newWallpapersSource else R.string.dialogTitle_editWallpapersSource)
                 .setView(contentView)
