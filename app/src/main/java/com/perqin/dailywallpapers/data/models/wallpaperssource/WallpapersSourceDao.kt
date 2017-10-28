@@ -1,10 +1,7 @@
 package com.perqin.dailywallpapers.data.models.wallpaperssource
 
 import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Delete
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 
 /**
  * Author: perqin
@@ -20,6 +17,9 @@ interface WallpapersSourceDao {
 
     @Query("SELECT * FROM ${WallpapersSource.TABLE_NAME} WHERE ${WallpapersSource.UID} = :wallpapersSourceUid LIMIT 1")
     fun queryWallpapersSourceByUid(wallpapersSourceUid: Long): LiveData<WallpapersSource?>
+
+    @Update
+    fun updateWallpapersSource(wallpapersSource: WallpapersSource)
 
     @Delete
     fun deleteWallpapersSource(wallpapersSource: WallpapersSource)

@@ -16,6 +16,9 @@ import kotlinx.coroutines.experimental.run
  * @date 10/27/17
  */
 class EditingWallpapersSourceViewModel : ViewModel() {
+    /**
+     * This LiveData serves as the single source of truth for the view. Update or Insert values are extracted from it.
+     */
     private val editingWallpapersSource: MutableLiveData<WallpapersSource> = MutableLiveData()
     private val existingSourceObserver: Observer<WallpapersSource?> = Observer { wallpapersSource ->
         editingWallpapersSource.value = wallpapersSource
@@ -41,4 +44,33 @@ class EditingWallpapersSourceViewModel : ViewModel() {
     }
 
     fun getEditingWallpapersSource(): LiveData<WallpapersSource> = editingWallpapersSource
+
+    fun saveNewWallpapersSource() {
+        launch(UI) {
+            if (existingSource == null) {
+                run(CommonPool) {
+                    WallpapersSourceRepository.addWallpapersSource(editingWallpapersSource.value!!)
+                }
+            } else {
+                run(CommonPool) {
+                    WallpapersSourceRepository.updateWallpapersSource(editingWallpapersSource.value!!)
+                }
+            }
+        }
+    }
+
+    fun changeUrl(url: String) {
+        editingWallpapersSource.value?.url = url
+        editingWallpapersSource.value = editingWallpapersSource.value
+    }
+
+    fun changeTitle(title: String) {
+        editingWallpapersSource.value?.title = title
+        editingWallpapersSource.value = editingWallpapersSource.value
+    }
+
+    fun changeVersion(version: Int) {
+        editingWallpapersSource.value?.version = version
+        editingWallpapersSource.value = editingWallpapersSource.value
+    }
 }

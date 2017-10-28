@@ -11,9 +11,11 @@ object WallpapersSourceRepository {
 
     fun getAllWallpapersSources() = wallpapersSourceDao.queryAllWallpapersSources()
 
+    fun getWallpapersSource(wallpapersSourceUid: Long) = wallpapersSourceDao.queryWallpapersSourceByUid(wallpapersSourceUid)
+
     fun addWallpapersSource(wallpapersSource: WallpapersSource) {
         wallpapersSourceDao.insertWallpapersSource(wallpapersSource)
     }
 
-    fun getWallpapersSource(wallpapersSourceUid: Long) = wallpapersSourceDao.queryWallpapersSourceByUid(wallpapersSourceUid)
+    fun updateWallpapersSource(wallpapersSource: WallpapersSource) = wallpapersSourceDao.updateWallpapersSource(wallpapersSource)
 }

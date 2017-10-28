@@ -8,6 +8,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import com.perqin.dailywallpapers.R
 import com.perqin.dailywallpapers.viewmodels.EditingWallpapersSourceViewModel
@@ -28,14 +30,45 @@ class EditingWallpapersSourceFragment : DialogFragment() {
 
     @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        // Setup contentView
         val contentView = LayoutInflater.from(activity).inflate(R.layout.fragment_editing_wallpapers_source, null)
+        contentView.editText_url.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                s?.toString()?.let { editingWallpapersSourceViewModel.changeUrl(it) }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+        contentView.editText_title.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                s?.toString()?.let { editingWallpapersSourceViewModel.changeTitle(it) }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+        contentView.editText_version.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                s?.toString()?.toIntOrNull()?.let { editingWallpapersSourceViewModel.changeVersion(it) }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+        // Observe ViewModel changes
         editingWallpapersSourceViewModel.getEditingWallpapersSource().observe(this, Observer {
-            contentView.editText_url.setText(it?.url)
+            if (it?.url != contentView.editText_url.text.toString()) contentView.editText_url.setText(it?.url)
+            if (it?.title != contentView.editText_title.text.toString()) contentView.editText_title.setText(it?.title)
+            if (it?.version.toString() != contentView.editText_version.text.toString()) contentView.editText_version.setText(it?.version.toString())
         })
         return AlertDialog.Builder(context, theme)
                 .setTitle(if (wallpapersSourceUid == null) R.string.dialogTitle_newWallpapersSource else R.string.dialogTitle_editWallpapersSource)
                 .setView(contentView)
-                .setPositiveButton(R.string.buttonText_save, { _, _ ->  })
+                .setPositiveButton(R.string.buttonText_save, { _, _ -> editingWallpapersSourceViewModel.saveNewWallpapersSource() })
                 .setNegativeButton(R.string.buttonText_discard, null)
                 .create()
     }
@@ -44,8 +77,10 @@ class EditingWallpapersSourceFragment : DialogFragment() {
         @JvmStatic
         fun newInstance(wallpapersSourceUid: Long?): EditingWallpapersSourceFragment {
             return EditingWallpapersSourceFragment().apply {
-                arguments = Bundle().apply {
-                    if (wallpapersSourceUid != null) putLong(ARG_WALLPAPERS_SOURCE_UID, wallpapersSourceUid)
+                if (wallpapersSourceUid != null) {
+                    arguments = Bundle().apply {
+                        putLong(ARG_WALLPAPERS_SOURCE_UID, wallpapersSourceUid)
+                    }
                 }
             }
         }

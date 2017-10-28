@@ -10,10 +10,6 @@ import com.perqin.dailywallpapers.data.models.wallpaperssource.WallpapersSource
 import com.perqin.dailywallpapers.pages.wallpaperssources.editingwallpaperssource.EditingWallpapersSourceFragment
 import com.perqin.dailywallpapers.viewmodels.WallpapersSourcesViewModel
 import kotlinx.android.synthetic.main.activity_wallpapers_sources.*
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.run
 
 class WallpapersSourcesActivity : AppCompatActivity() {
     private lateinit var wallpapersSourcesViewModel : WallpapersSourcesViewModel
@@ -26,7 +22,9 @@ class WallpapersSourcesActivity : AppCompatActivity() {
         recyclerAdapter = WallpapersSourcesRecyclerAdapter()
         recyclerAdapter.setItemInteractListener(object : WallpapersSourcesRecyclerAdapter.ItemInteractListener {
             override fun onItemEditClick(wallpapersSource: WallpapersSource) {
-                EditingWallpapersSourceFragment.newInstance(wallpapersSource.uid).show(supportFragmentManager, EditingWallpapersSourceFragment::class.java.name)
+                EditingWallpapersSourceFragment
+                        .newInstance(wallpapersSource.uid)
+                        .show(supportFragmentManager, EditingWallpapersSourceFragment::class.java.name)
             }
         })
 
@@ -42,13 +40,9 @@ class WallpapersSourcesActivity : AppCompatActivity() {
         recyclerView.adapter = recyclerAdapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         fab.setOnClickListener {
-            launch(UI) {
-                run(CommonPool) {
-                    wallpapersSourcesViewModel.addWallpapersSource(WallpapersSource(
-                            null, "Example", "http://example.com", 0
-                    ))
-                }
-            }
+            EditingWallpapersSourceFragment
+                    .newInstance(null)
+                    .show(supportFragmentManager, EditingWallpapersSourceFragment::class.java.name)
         }
     }
 }
