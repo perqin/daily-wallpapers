@@ -19,5 +19,3 @@ class App : Application() {
         lateinit var context: Context
     }
 }
-
-val AppContext by lazy { App.context }

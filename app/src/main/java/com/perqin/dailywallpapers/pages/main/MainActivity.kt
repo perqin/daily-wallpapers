@@ -29,5 +29,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+        wallpapersSourcesVm.selectedWallpapersSource.observe(this, Observer {
+        })
     }
 }

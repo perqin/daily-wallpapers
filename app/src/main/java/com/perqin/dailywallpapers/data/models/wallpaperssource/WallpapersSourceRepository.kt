@@ -1,5 +1,6 @@
 package com.perqin.dailywallpapers.data.models.wallpaperssource
 
+import com.perqin.dailywallpapers.data.android.PreferencesStore
 import com.perqin.dailywallpapers.data.room.AppDb
 
 /**
@@ -12,6 +13,10 @@ object WallpapersSourceRepository {
     fun getAllWallpapersSources() = wallpapersSourceDao.queryAllWallpapersSources()
 
     fun getWallpapersSource(wallpapersSourceUid: Long) = wallpapersSourceDao.queryWallpapersSourceByUid(wallpapersSourceUid)
+
+    fun getSelectedWallpapersSource() = PreferencesStore.getSelectedWallpapersSourceUid().let {
+        wallpapersSourceDao.queryWallpapersSourceByUid(it)
+    }
 
     fun addWallpapersSource(wallpapersSource: WallpapersSource) {
         wallpapersSourceDao.insertWallpapersSource(wallpapersSource)
