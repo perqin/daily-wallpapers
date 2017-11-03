@@ -1,4 +1,4 @@
-package com.perqin.dailywallpapers
+package com.perqin.dailywallpapers.utils
 
 /**
  * Created on 11/3/17.

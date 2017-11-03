@@ -1,4 +1,4 @@
-package com.perqin.dailywallpapers
+package com.perqin.dailywallpapers.utils
 
 import android.arch.lifecycle.LiveData
 import android.content.SharedPreferences

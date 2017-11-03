@@ -1,6 +1,6 @@
 package com.perqin.dailywallpapers.data.android
 
-import com.perqin.dailywallpapers.longLiveData
+import com.perqin.dailywallpapers.utils.longLiveData
 
 /**
  * Author: perqin
