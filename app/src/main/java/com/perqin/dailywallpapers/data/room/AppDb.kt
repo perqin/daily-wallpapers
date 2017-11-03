@@ -1,7 +1,7 @@
 package com.perqin.dailywallpapers.data.room
 
 import android.arch.persistence.room.Room
-import com.perqin.dailywallpapers.app.AppContext
+import com.perqin.dailywallpapers.app.App
 
 /**
  * Author: perqin
@@ -9,6 +9,6 @@ import com.perqin.dailywallpapers.app.AppContext
  */
 object AppDb {
     val instance by lazy {
-        Room.databaseBuilder(AppContext, AppRoomDatabase::class.java, AppRoomDatabase.DB_NAME).build()
+        Room.databaseBuilder(App.context, AppRoomDatabase::class.java, AppRoomDatabase.DB_NAME).build()
     }
 }

@@ -11,12 +11,19 @@ import com.perqin.dailywallpapers.data.models.wallpaperssource.WallpapersSourceR
  * @author perqin
  */
 class MainPageViewModel : ViewModel() {
-    val selectableWallpapersSources: MediatorLiveData<Pair<List<WallpapersSource>, WallpapersSource>> by lazy {
-        MediatorLiveData<Pair<List<WallpapersSource>, WallpapersSource>>().apply {
+    val selectableWallpapersSources: MediatorLiveData<Pair<List<WallpapersSource>, Long>> by lazy {
+        MediatorLiveData<Pair<List<WallpapersSource>, Long>>().apply {
             addSource(WallpapersSourceRepository.getAllWallpapersSources(), {
+                value = Pair(it!!, value!!.second)
             })
-            addSource(WallpapersSourceRepository.getSelectedWallpapersSource(), {
+            addSource(WallpapersSourceRepository.getSelectedWallpapersSourceUid(), {
+                value = Pair(value!!.first, it!!)
             })
+            value = Pair(emptyList(), -1)
         }
+    }
+
+    fun selectWallpapersSources(uid: Long) {
+        WallpapersSourceRepository.setSelectedWallpapersSourceByUid(uid)
     }
 }

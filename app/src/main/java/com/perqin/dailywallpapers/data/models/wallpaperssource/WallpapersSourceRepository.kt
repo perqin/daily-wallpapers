@@ -14,13 +14,15 @@ object WallpapersSourceRepository {
 
     fun getWallpapersSource(wallpapersSourceUid: Long) = wallpapersSourceDao.queryWallpapersSourceByUid(wallpapersSourceUid)
 
-    fun getSelectedWallpapersSource() = PreferencesStore.getSelectedWallpapersSourceUid().let {
-        wallpapersSourceDao.queryWallpapersSourceByUid(it)
-    }
-
     fun addWallpapersSource(wallpapersSource: WallpapersSource) {
         wallpapersSourceDao.insertWallpapersSource(wallpapersSource)
     }
 
     fun updateWallpapersSource(wallpapersSource: WallpapersSource) = wallpapersSourceDao.updateWallpapersSource(wallpapersSource)
+
+    fun getSelectedWallpapersSourceUid() = PreferencesStore.getSelectedWallpapersSourceUid()
+
+    fun setSelectedWallpapersSourceByUid(uid: Long) {
+        PreferencesStore.setSelectedWallpapersSourceUid(uid)
+    }
 }
