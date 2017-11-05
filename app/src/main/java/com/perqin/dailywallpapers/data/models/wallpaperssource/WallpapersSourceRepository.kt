@@ -1,5 +1,6 @@
 package com.perqin.dailywallpapers.data.models.wallpaperssource
 
+import android.arch.lifecycle.Transformations
 import com.perqin.dailywallpapers.data.android.PreferencesStore
 import com.perqin.dailywallpapers.data.room.AppDb
 
@@ -22,7 +23,15 @@ object WallpapersSourceRepository {
 
     fun getSelectedWallpapersSourceUid() = PreferencesStore.getSelectedWallpapersSourceUid()
 
+    fun getSelectedWallpapersSource() = Transformations.switchMap(PreferencesStore.getSelectedWallpapersSourceUid(), {
+        wallpapersSourceDao.queryWallpapersSourceByUid(it)
+    })!!
+
     fun setSelectedWallpapersSourceByUid(uid: Long) {
         PreferencesStore.setSelectedWallpapersSourceUid(uid)
+    }
+
+    fun setSelectedWallpapersSource(wallpapersSource: WallpapersSource) {
+        PreferencesStore.setSelectedWallpapersSourceUid(wallpapersSource.uid!!)
     }
 }

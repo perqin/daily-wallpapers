@@ -13,10 +13,10 @@ interface WallpapersSourceDao {
     fun insertWallpapersSource(wallpapersSource: WallpapersSource)
 
     @Query("SELECT * FROM ${WallpapersSource.TABLE_NAME}")
-    fun queryAllWallpapersSources(): LiveData<List<WallpapersSource>?>
+    fun queryAllWallpapersSources(): LiveData<List<WallpapersSource>>
 
     @Query("SELECT * FROM ${WallpapersSource.TABLE_NAME} WHERE ${WallpapersSource.UID} = :wallpapersSourceUid LIMIT 1")
-    fun queryWallpapersSourceByUid(wallpapersSourceUid: Long): LiveData<WallpapersSource?>
+    fun queryWallpapersSourceByUid(wallpapersSourceUid: Long): LiveData<WallpapersSource>
 
     @Update
     fun updateWallpapersSource(wallpapersSource: WallpapersSource)

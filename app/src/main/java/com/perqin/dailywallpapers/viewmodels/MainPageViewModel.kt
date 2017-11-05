@@ -1,9 +1,14 @@
 package com.perqin.dailywallpapers.viewmodels
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
+import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
+import com.perqin.dailywallpapers.data.models.wallpaper.Wallpaper
+import com.perqin.dailywallpapers.data.models.wallpaper.WallpaperRepository
 import com.perqin.dailywallpapers.data.models.wallpaperssource.WallpapersSource
 import com.perqin.dailywallpapers.data.models.wallpaperssource.WallpapersSourceRepository
+import java.util.*
 
 /**
  * Created on 11/1/17.
@@ -11,19 +16,26 @@ import com.perqin.dailywallpapers.data.models.wallpaperssource.WallpapersSourceR
  * @author perqin
  */
 class MainPageViewModel : ViewModel() {
-    val selectableWallpapersSources: MediatorLiveData<Pair<List<WallpapersSource>, Long>> by lazy {
-        MediatorLiveData<Pair<List<WallpapersSource>, Long>>().apply {
-            addSource(WallpapersSourceRepository.getAllWallpapersSources(), {
-                value = Pair(it!!, value!!.second)
-            })
-            addSource(WallpapersSourceRepository.getSelectedWallpapersSourceUid(), {
-                value = Pair(value!!.first, it!!)
-            })
-            value = Pair(emptyList(), -1)
-        }
+    val wallpapersSources: LiveData<List<WallpapersSource>> by lazy {
+        WallpapersSourceRepository.getAllWallpapersSources()
     }
 
-    fun selectWallpapersSources(uid: Long) {
-        WallpapersSourceRepository.setSelectedWallpapersSourceByUid(uid)
+    val selectedWallpapersSource: LiveData<WallpapersSource> by lazy {
+        WallpapersSourceRepository.getSelectedWallpapersSource()
+    }
+
+    val wallpapers: LiveData<List<Wallpaper>> by lazy {
+        Transformations.switchMap(MediatorLiveData<Pair<WallpapersSource, Calendar>>().apply {
+            addSource(WallpapersSourceRepository.getSelectedWallpapersSource(), {
+                value = Pair(it!!, Calendar.getInstance())
+            })
+            // TODO: Change date
+        }, {
+            WallpaperRepository.getWallpapersBySourcesAndDate(it.first, it.second)
+        })
+    }
+
+    fun selectWallpapersSource(wallpapersSource: WallpapersSource) {
+        WallpapersSourceRepository.setSelectedWallpapersSource(wallpapersSource)
     }
 }
